@@ -72,4 +72,17 @@ const getExpenses = async (req: Request, res: Response) => {
   }
 }
 
-export default { createExpense, getExpenses }
+const removeExpense = async (req: Request, res: Response) => {
+  const { expenseId } = req.params
+
+  try {
+    await expensesModel.findByIdAndDelete(expenseId)
+
+    res.status(200).json({ message: 'Expense deleted successfully!' })
+
+  } catch (err) {
+    res.status(500).json({ error: 'Something went wrong' })
+  }
+}
+
+export default { createExpense, getExpenses, removeExpense }
